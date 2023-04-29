@@ -1,0 +1,17 @@
+.titleAndButton {
+    display: flex;
+    justify-content: space-around;
+    height: 30px;
+}
+
+.post {
+    background-color: coral;
+    width: 300px;
+    margin: 0 auto 15px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.body {
+    margin: 35px 0;
+}

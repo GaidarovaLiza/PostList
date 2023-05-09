@@ -28,7 +28,15 @@ function App() {
 
     const deletePost = (id: string) => setPosts(posts.filter(p => p.id !== id))
     const addLike = (taskID: string) => setPosts(posts.map(el => el.id === taskID ? {...el, likes: el.likes + 1} : el))
-    const removeLike = (taskID: string) => setPosts(posts.map(el => el.id === taskID ? {...el, likes: el.likes - 1} : el))
+    const removeLike = (taskID: string) => setPosts(posts.map(el => el.id === taskID ? {
+        ...el,
+        likes: el.likes - 1
+    } : el))
+
+    const changeTitle = (newText: string, postId: string, field: 'title' | 'body') => setPosts(posts.map(el => el.id === postId ? {
+        ...el,
+        [field]: newText
+    } : el))
 
 
     return (
@@ -37,7 +45,9 @@ function App() {
                        removeLike={removeLike}
                        posts={posts}
                        deletePost={deletePost}
-                       addPost={addPost}/>
+                       addPost={addPost}
+                       onChange={changeTitle}/>
+
         </div>
     )
 }

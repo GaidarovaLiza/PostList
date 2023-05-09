@@ -17,6 +17,7 @@ export const AddForm = (props: PropsType) => {
         setBody('')
         setTitle('')
     }
+
     return (
         <div>
             <input placeholder={'Type your title'} value={title} onChange={onChangeTitleHandler} type="text"/>

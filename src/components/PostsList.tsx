@@ -1,11 +1,11 @@
 import {PostListType} from "../App";
-import {ChangeEvent, useState} from "react";
+import React from "react";
 import s from './PostsList.module.css'
 import {SuperButton} from "./SuperButton/SupperButton";
 import {AddForm} from "./AddForm/AddForm";
 import EditableSpan from "./EditableSpan/EditableSpan";
 
-type PropsType = {
+type PostsListPropsType = {
     posts: PostListType
     deletePost: (id: string) => void
     addPost: (title: string, body: string) => void
@@ -14,24 +14,33 @@ type PropsType = {
     onChange: (newTitle: string, taskID: string, field: 'title' | 'body') => void
 }
 
-export const PostsList = (props: PropsType) => {
+export const PostsList: React.FC<PostsListPropsType> = (
+    {
+        posts,
+        deletePost,
+        addPost,
+        addLike,
+        removeLike,
+        onChange
+    }
+) => {
 
-    const mappedPosts = props.posts.map(el => {
+    const mappedPosts = posts.map(el => {
         return (
             <div className={s.post}>
                 <div className={s.titleAndButton}>
                     <h3>
-                        <EditableSpan text={el.title} id={el.id} onChange={props.onChange} field="title"/>
+                        <EditableSpan text={el.title} id={el.id} onChange={onChange} field="title"/>
                     </h3>
-                    <SuperButton callback={() => props.deletePost(el.id)} name={'X'}/>
+                    <SuperButton callback={() => deletePost(el.id)} name={'X'}/>
                 </div>
                 <li className={s.body} key={el.id}>
-                    <EditableSpan text={el.body} onChange={props.onChange} id={el.id} field="body"/>
+                    <EditableSpan text={el.body} onChange={onChange} id={el.id} field="body"/>
                 </li>
                 <span>
-                    <SuperButton callback={() => props.removeLike(el.id)} name={'-'}/>
+                    <SuperButton callback={() => removeLike(el.id)} name={'-'}/>
                     {el.likes}
-                    <SuperButton callback={() => props.addLike(el.id)} name={'+'}/>
+                    <SuperButton callback={() => addLike(el.id)} name={'+'}/>
                 </span>
             </div>
         )
@@ -39,7 +48,7 @@ export const PostsList = (props: PropsType) => {
 
     return (
         <div>
-            <AddForm addPost={props.addPost}/>
+            <AddForm addPost={addPost}/>
             {mappedPosts}
         </div>
     )

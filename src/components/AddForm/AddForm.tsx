@@ -1,11 +1,15 @@
-import {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import {SuperButton} from "../SuperButton/SupperButton";
 
-type PropsType = {
+type AddFormPropsType = {
     addPost: (title: string, body: string) => void
 }
 
-export const AddForm = (props: PropsType) => {
+export const AddForm: React.FC<AddFormPropsType> = (
+    {
+        addPost
+    }
+) => {
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
 
@@ -13,7 +17,7 @@ export const AddForm = (props: PropsType) => {
     const onChangeBodyHandler = (e: ChangeEvent<HTMLInputElement>) => setBody(e.currentTarget.value)
 
     const addTaskHandler = () => {
-        props.addPost(title, body)
+        addPost(title, body)
         setBody('')
         setTitle('')
     }

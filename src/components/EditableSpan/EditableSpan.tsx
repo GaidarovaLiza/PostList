@@ -1,4 +1,4 @@
-import {ChangeEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 
 type EditableSpanPropsType = {
     text: string
@@ -7,27 +7,34 @@ type EditableSpanPropsType = {
     field: 'title' | 'body'
 }
 
-const EditableSpan = (props: EditableSpanPropsType) => {
+const EditableSpan: React.FC<EditableSpanPropsType> = (
+    {
+        text,
+        id,
+        field,
+        onChange
+    }
+) => {
     const [editMode, setEditMode] = useState(false)
-    const [text, setText] = useState(props.text)
+    const [value, setValue] = useState(text)
 
     const onDoubleClickHandler = () => setEditMode(true)
 
     const onBlurHandler = () => {
         setEditMode(false)
-        props.onChange(text, props.id, props.field)
+        onChange(value, id, field)
     }
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => setText(e.currentTarget.value)
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => setValue(e.currentTarget.value)
 
     useEffect(() => {
-        setText(props.text)
-    }, [props.text])
+        setValue(text)
+    }, [text])
 
     return (
         editMode
-            ? <input value={text} onChange={onChangeHandler} onBlur={onBlurHandler} autoFocus type="text"/>
-            : <span onDoubleClick={onDoubleClickHandler}>{props.text}</span>
+            ? <input value={value} onChange={onChangeHandler} onBlur={onBlurHandler} autoFocus type="text"/>
+            : <span onDoubleClick={onDoubleClickHandler}>{text}</span>
     );
 };
 
